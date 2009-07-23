@@ -1,0 +1,5 @@
+virt-what (1.1-1) unstable; urgency=low
+
+  * Initial release. (Closes: #538202)
+
+ -- Laurent Léonard <laurent@open-minds.org>  Thu, 23 Jul 2009 23:29:49 +0200
