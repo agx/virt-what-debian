@@ -1,0 +1,26 @@
+From: =?utf-8?q?Laurent=20L=C3=A9onard?= <laurent@open-minds.org>
+Date: Fri, 7 Aug 2009 15:22:54 +0200
+Subject: [PATCH] Add UML support.
+
+---
+ virt-what.in |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/virt-what.in b/virt-what.in
+index d0ac095..d967307 100644
+--- a/virt-what.in
++++ b/virt-what.in
+@@ -87,6 +87,12 @@ if [ -d /proc/vz -a ! -d /proc/bc ]; then
+     echo openvz
+ fi
+ 
++# Check for UML.
++
++if grep -q 'UML' /proc/cpuinfo; then
++    echo uml
++fi
++
+ # To tell if it is Xen and KVM HVM (fully virtualized) we can use this
+ # helper C program.
+ 
+-- 
