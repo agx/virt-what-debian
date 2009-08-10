@@ -3,11 +3,12 @@ Date: Fri, 7 Aug 2009 15:22:54 +0200
 Subject: [PATCH] Add UML support.
 
 ---
- virt-what.in |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+ virt-what.in  |    6 ++++++
+ virt-what.pod |    8 ++++++++
+ 2 files changed, 14 insertions(+), 0 deletions(-)
 
 diff --git a/virt-what.in b/virt-what.in
-index d0ac095..d967307 100644
+index d0ac095..eaaf322 100644
 --- a/virt-what.in
 +++ b/virt-what.in
 @@ -87,6 +87,12 @@ if [ -d /proc/vz -a ! -d /proc/bc ]; then
@@ -15,7 +16,7 @@ index d0ac095..d967307 100644
  fi
  
 +# Check for UML.
-+
++# Added by Laurent Léonard.
 +if grep -q 'UML' /proc/cpuinfo; then
 +    echo uml
 +fi
@@ -23,4 +24,27 @@ index d0ac095..d967307 100644
  # To tell if it is Xen and KVM HVM (fully virtualized) we can use this
  # helper C program.
  
+diff --git a/virt-what.pod b/virt-what.pod
+index 0cfb753..79da9a9 100644
+--- a/virt-what.pod
++++ b/virt-what.pod
+@@ -1,3 +1,5 @@
++=encoding utf8
++
+ =head1 NAME
+ 
+ virt-what - detect if we are running in a virtual machine
+@@ -42,6 +44,12 @@ This is QEMU.
+ 
+ Status: confirmed by RWMJ.
+ 
++=item B<uml>
++
++This is a User-Mode Linux (UML) guest.
++
++Status: contributed by Laurent Léonard
++
+ =item B<virtualpc>
+ 
+ The guest appears to be running on Microsoft VirtualPC.
 -- 
