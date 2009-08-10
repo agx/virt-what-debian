@@ -3,11 +3,12 @@ Date: Fri, 7 Aug 2009 15:23:27 +0200
 Subject: [PATCH] Add VirtualBox support.
 
 ---
- virt-what.in |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+ virt-what.in  |    6 ++++++
+ virt-what.pod |    6 ++++++
+ 2 files changed, 12 insertions(+), 0 deletions(-)
 
 diff --git a/virt-what.in b/virt-what.in
-index d967307..6871271 100644
+index eaaf322..37b4fb4 100644
 --- a/virt-what.in
 +++ b/virt-what.in
 @@ -77,6 +77,12 @@ if echo "$dmi" | grep -q 'Manufacturer: Microsoft Corporation'; then
@@ -15,7 +16,7 @@ index d967307..6871271 100644
  fi
  
 +# Check for VirtualBox.
-+
++# Added by Laurent Léonard.
 +if echo "$dmi" | grep -q 'Manufacturer: innotek GmbH'; then
 +    echo virtualbox
 +fi
@@ -23,4 +24,21 @@ index d967307..6871271 100644
  # Check for OpenVZ / Virtuozzo.
  # Added by Evgeniy Sokolov.
  # /proc/vz - always exists if OpenVZ kernel is running (inside and outside
+diff --git a/virt-what.pod b/virt-what.pod
+index 79da9a9..6451c06 100644
+--- a/virt-what.pod
++++ b/virt-what.pod
+@@ -50,6 +50,12 @@ This is a User-Mode Linux (UML) guest.
+ 
+ Status: contributed by Laurent Léonard
+ 
++=item B<virtualbox>
++
++This is a VirtualBox guest.
++
++Status: contributed by Laurent Léonard
++
+ =item B<virtualpc>
+ 
+ The guest appears to be running on Microsoft VirtualPC.
 -- 
