@@ -10,4 +10,4 @@ clean::
 	rm -f $(CURDIR)/virt-what.1
 
 binary-install/virt-what::
-	mv $(CURDIR)/debian/virt-what/usr/bin/virt-what-cpuid-helper $(CURDIR)/debian/virt-what/usr/lib/virt-what
+	mv $(DEB_DESTDIR)usr/bin/virt-what-cpuid-helper $(DEB_DESTDIR)usr/lib/virt-what
