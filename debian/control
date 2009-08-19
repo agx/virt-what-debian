@@ -11,7 +11,7 @@ Homepage: http://et.redhat.com/~rjones/virt-what
 
 Package: virt-what
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, dmidecode
+Depends: ${misc:Depends}, ${shlibs:Depends}, dmidecode [amd64 i386 ia64 kfreebsd-amd64 kfreebsd-i386]
 Description: detect if we are running in a virtual machine
  Virt-what is a shell script which can be used to detect if the program is
  running in a virtual machine.
