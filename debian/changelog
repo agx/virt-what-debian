@@ -1,3 +1,16 @@
+virt-what (1.1-2) unstable; urgency=low
+
+  * [ec6c9a0] Add UML support. Pulled from upstream fd81b8d.
+  * [e6a8c93] Add VirtualBox support. Pulled from upstream b103ff5.
+  * [b21e795] Bump Standards-Version to 3.8.3.
+  * [4e8a17b] Use DEB_DESTDIR variable to move virt-what-cpuid-helper.
+  * [b65743f] Use Makefile conventions in debian/rules.
+  * [42714e7] Move virt-what to /usr/sbin.
+  * [a331023] Make dmidecode dependency architecture specific. (Closes: #543810)
+  * [6c425f1] Remove debian/docs.
+
+ -- Laurent Léonard <laurent@open-minds.org>  Mon, 31 Aug 2009 00:54:07 +0200
+
 virt-what (1.1-1) unstable; urgency=low
 
   * Initial release. (Closes: #538202)
