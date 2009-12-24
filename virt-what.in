@@ -63,7 +63,12 @@ if [ "$uid" != 0 ]; then
     fail "this script must be run as root"
 fi
 
-PATH=/sbin:/usr/sbin:$PATH
+# Add /sbin and /usr/sbin to the path so we can find system
+# binaries like dmicode.
+# Add /usr/libexec to the path so we can find the helper binary.
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+PATH=@libexecdir@:/sbin:/usr/sbin:$PATH
 
 # Check for various products in the BIOS information.
 
@@ -77,6 +82,12 @@ if echo "$dmi" | grep -q 'Manufacturer: Microsoft Corporation'; then
     echo virtualpc
 fi
 
+# Check for VirtualBox.
+# Added by Laurent Léonard.
+if echo "$dmi" | grep -q 'Manufacturer: innotek GmbH'; then
+    echo virtualbox
+fi
+
 # Check for OpenVZ / Virtuozzo.
 # Added by Evgeniy Sokolov.
 # /proc/vz - always exists if OpenVZ kernel is running (inside and outside
@@ -85,6 +96,12 @@ fi
 
 if [ -d /proc/vz -a ! -d /proc/bc ]; then
     echo openvz
+fi
+
+# Check for UML.
+# Added by Laurent Léonard.
+if grep -q 'UML' /proc/cpuinfo; then
+    echo uml
 fi
 
 # To tell if it is Xen and KVM HVM (fully virtualized) we can use this

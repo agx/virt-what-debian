@@ -17,10 +17,12 @@
 
 EXTRA_DIST = virt-what.in virt-what.pod
 
+CLEANFILES = virt-what.1 virt-what.txt
+
 AM_CPPFLAGS = -Wall
 
 bin_SCRIPTS = virt-what
-bin_PROGRAMS = virt-what-cpuid-helper
+libexec_PROGRAMS = virt-what-cpuid-helper
 
 man_MANS = virt-what.1
 
