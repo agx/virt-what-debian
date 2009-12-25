@@ -7,7 +7,4 @@ DEB_INSTALL_DOCS_ALL =
 
 binary-install/virt-what::
 	mv $(DEB_DESTDIR)usr/bin/virt-what $(DEB_DESTDIR)usr/sbin
-	mv $(DEB_DESTDIR)usr/bin/virt-what-cpuid-helper $(DEB_DESTDIR)usr/lib/virt-what
-
-clean::
-	rm -f $(CURDIR)/virt-what.1
+	rmdir $(DEB_DESTDIR)usr/bin
