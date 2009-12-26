@@ -1,3 +1,20 @@
+virt-what (1.2-1) unstable; urgency=low
+
+  * [d89e616] Reorder debian/rules targets.
+  * [010eae6] Imported Upstream version 1.2
+  * [21aa31a] Drop patches. 
+     0001-Change-virt-what-cpuid-helper-path-to-usr-lib-virt-w.patch 
+         - fixed upstream.
+     0002-Add-UML-support.patch 
+         - applied upstream.
+     0003-Add-VirtualBox-support.patch 
+         - applied upstream.
+  * [8db5f35] Update debian/rules.
+  * [dfcb745] Allow DM upload.
+  * [9099d2a] Drop Quilt README.source.
+
+ -- Laurent Léonard <laurent@open-minds.org>  Sat, 26 Dec 2009 16:45:27 +0100
+
 virt-what (1.1-2) unstable; urgency=low
 
   * [ec6c9a0] Add UML support. Pulled from upstream fd81b8d.
