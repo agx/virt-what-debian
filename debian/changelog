@@ -1,3 +1,11 @@
+virt-what (1.3-1) experimental; urgency=low
+
+  * [3a761e2] Imported Upstream version 1.3
+  * [e813a75] Bump Standards-Version to 3.9.1
+  * [8bb0067] Update debian/rules
+
+ -- Laurent Léonard <laurent@open-minds.org>  Thu, 04 Nov 2010 00:08:19 +0100
+
 virt-what (1.2-1) unstable; urgency=low
 
   * [d89e616] Reorder debian/rules targets.
