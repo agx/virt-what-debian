@@ -1,6 +1,6 @@
 #!/bin/bash -
 # @configure_input@
-# Copyright (C) 2008-2009 Red Hat Inc.
+# Copyright (C) 2008-2010 Red Hat Inc.
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -70,13 +70,25 @@ prefix=@prefix@
 exec_prefix=@exec_prefix@
 PATH=@libexecdir@:/sbin:/usr/sbin:$PATH
 
+# Many fullvirt hypervisors give an indication through CPUID.  Use the
+# helper program to get this information.
+
+cpuid=`virt-what-cpuid-helper`
+
 # Check for various products in the BIOS information.
 
 dmi=`dmidecode 2>&1`
 
-if echo "$dmi" | grep -q 'Manufacturer: VMware'; then
+# Check for VMware.
+# cpuid check added by Chetan Loke.
+
+if [ "$cpuid" = "VMwareVMware" ]; then
+    echo vmware
+elif echo "$dmi" | grep -q 'Manufacturer: VMware'; then
     echo vmware
 fi
+
+# Check for VirtualPC.
 
 if echo "$dmi" | grep -q 'Manufacturer: Microsoft Corporation'; then
     echo virtualpc
@@ -101,24 +113,21 @@ fi
 # Check for UML.
 # Added by Laurent Léonard.
 if grep -q 'UML' /proc/cpuinfo; then
-    echo uml
+    echo uml
 fi
-
-# To tell if it is Xen and KVM HVM (fully virtualized) we can use this
-# helper C program.
-
-cpuid=`virt-what-cpuid-helper`
 
 # Check for Xen.
 
 if [ "$cpuid" = "XenVMMXenVMM" ]; then
     echo xen; echo xen-hvm
     is_xen=1
-elif [ -f /proc/xen/privcmd ]; then
-    echo xen; echo xen-dom0
-    is_xen=1
 elif [ -f /proc/xen/capabilities ]; then
-    echo xen; echo xen-domU
+    echo xen
+    if grep -q "control_d" /proc/xen/capabilities; then
+        echo xen-dom0
+    else
+        echo xen-domU
+    fi
     is_xen=1
 elif [ -d /proc/xen ]; then
     # This directory can be present when Xen paravirt drivers are
