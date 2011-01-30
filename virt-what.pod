@@ -25,12 +25,43 @@ don't know about or cannot detect.
 
 =over 4
 
-=item B<openvz>
+=item B<hyperv>
 
-The guest appears to be running inside an OpenVZ or Virtuozzo
-container.
+This is Hyper-V.
 
-Status: contributed by Evgeniy Sokolov
+Status: from MSDN description, not tested.
+
+=item B<ibm_systemz>
+
+This is an IBM SystemZ (or other S/390) mainframe.  Additional
+facts listed below may also be printed.
+
+=item B<ibm_systemz-direct>
+
+This is Linux running directly on a IBM SystemZ mainframe.
+
+This is expected to be a highly unusual configuration - if
+you see this result you should treat it with suspicion.
+
+Status: not confirmed
+
+=item B<ibm_systemz-lpar>
+
+This is Linux running directly on an LPAR on an IBM SystemZ mainframe.
+
+Status: not confirmed
+
+=item B<ibm_systemz-zvm>
+
+This is a z/VM guest running in an LPAR on an IBM SystemZ mainframe.
+
+Status: confirmed by RWMJ using a Fedora guest running in z/VM
+
+=item B<linux_vserver>
+
+This process is running in a Linux VServer container.
+
+Status: contributed by Barış Metin
 
 =item B<kvm>
 
@@ -38,9 +69,25 @@ This is KVM.
 
 Status: confirmed by RWMJ.
 
+=item B<openvz>
+
+The guest appears to be running inside an OpenVZ or Virtuozzo
+container.
+
+Status: contributed by Evgeniy Sokolov
+
+=item B<powervm_lx86>
+
+The guest is running inside IBM PowerVM Lx86 Linux/x86 emulator.
+
+Status: data supplied by Jeffrey Scheel, not confirmed
+
 =item B<qemu>
 
-This is QEMU.
+This is QEMU using software emulation.
+
+Note that for KVM (hardware accelerated) guests you should I<not> see
+this.
 
 Status: confirmed by RWMJ.
 
@@ -49,6 +96,12 @@ Status: confirmed by RWMJ.
 This is a User-Mode Linux (UML) guest.
 
 Status: contributed by Laurent Léonard
+
+=item B<virtage>
+
+This is Hitachi Virtualization Manager (HVM) Virtage logical partitioning.
+
+Status: data supplied by Bhavna Sarathy, not confirmed
 
 =item B<virtualbox>
 
@@ -120,8 +173,7 @@ You might include this information in status and monitoring programs.
 
 =head1 SEE ALSO
 
-L<http://www.libvirt.org/>,
-L<http://et.redhat.com/~rjones/>,
+L<http://people.redhat.com/~rjones/virt-what/>,
 L<http://www.vmware.com/>,
 L<http://www.microsoft.com/windows/products/winfamily/virtualpc>,
 L<http://xensource.com/>,
@@ -135,8 +187,8 @@ Richard W.M. Jones <rjones @ redhat . com>
 
 =head1 COPYRIGHT
 
-(C) Copyright 2008 Red Hat Inc.,
-L<http://libvirt.org/>
+(C) Copyright 2008-2011 Red Hat Inc.,
+L<http://people.redhat.com/~rjones/virt-what/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -176,7 +228,7 @@ Run
 and keep I<virt-what.log>.  It may contain error messages which you
 should submit with your bug report.
 
-=item 3. Get version of virt-what and version of libvirt.
+=item 3. Get version of virt-what.
 
 Run
 
@@ -188,7 +240,7 @@ Go to L<https://bugzilla.redhat.com/> and enter a new bug.
 Please describe the problem in as much detail as possible.
 
 Remember to include the version numbers (step 3) and the debug
-messages file (step 2).
+messages file (step 2) and as much other detail as possible.
 
 =item 5. Assign the bug to rjones @ redhat.com
 
