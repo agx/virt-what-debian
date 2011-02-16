@@ -28,6 +28,11 @@ EXTRA_DIST = \
 	tests/esx4.1/sbin/dmidecode \
 	tests/esx4.1/sbin/id \
 	tests/esx4.1/sbin/virt-what-cpuid-helper \
+	tests/hyperv/proc/cpuinfo \
+	tests/hyperv/proc/self/status \
+	tests/hyperv/sbin/dmidecode \
+	tests/hyperv/sbin/id \
+	tests/hyperv/sbin/virt-what-cpuid-helper \
 	tests/kvm/proc/cpuinfo \
 	tests/kvm/proc/self/status \
 	tests/kvm/sbin/dmidecode \
@@ -38,6 +43,11 @@ EXTRA_DIST = \
 	tests/linux-vserver/sbin/dmidecode \
 	tests/linux-vserver/sbin/id \
 	tests/linux-vserver/sbin/virt-what-cpuid-helper \
+	tests/parallels-desktop/proc/cpuinfo \
+	tests/parallels-desktop/proc/self/status \
+	tests/parallels-desktop/sbin/dmidecode \
+	tests/parallels-desktop/sbin/id \
+	tests/parallels-desktop/sbin/virt-what-cpuid-helper \
 	tests/qemu/proc/cpuinfo \
 	tests/qemu/proc/self/status \
 	tests/qemu/sbin/dmidecode \
@@ -104,15 +114,17 @@ EXTRA_DIST = \
 	tests/zvm/sbin/virt-what-cpuid-helper \
 	tests/test-baremetal.sh \
 	tests/test-esx4.1.sh \
+	tests/test-hyperv.sh \
 	tests/test-kvm.sh \
 	tests/test-linux-vserver.sh \
+	tests/test-parallels-desktop.sh \
 	tests/test-qemu.sh \
 	tests/test-rhel5-xen-dom0.sh \
 	tests/test-rhel5-xen-domU-hvm.sh \
 	tests/test-rhel5-xen-domU-pv.sh \
 	tests/test-zvm.sh
 
-CLEANFILES = virt-what.1 virt-what.txt
+CLEANFILES = virt-what virt-what.1 virt-what.txt
 
 AM_CPPFLAGS = -Wall
 
@@ -131,8 +143,10 @@ virt-what.txt: virt-what.pod
 TESTS = \
 	tests/test-baremetal.sh \
 	tests/test-esx4.1.sh \
+	tests/test-hyperv.sh \
 	tests/test-kvm.sh \
 	tests/test-linux-vserver.sh \
+	tests/test-parallels-desktop.sh \
 	tests/test-qemu.sh \
 	tests/test-rhel5-xen-dom0.sh \
 	tests/test-rhel5-xen-domU-hvm.sh \

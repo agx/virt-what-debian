@@ -100,8 +100,10 @@ if [ "$cpuid" = "Microsoft Hv" ]; then
 fi
 
 # Check for VirtualPC.
-
-if echo "$dmi" | grep -q 'Manufacturer: Microsoft Corporation'; then
+# The negative check for cpuid is to distinguish this from Hyper-V
+# which also has the same manufacturer string in the SM-BIOS data.
+if [ "$cpuid" != "Microsoft Hv" ] &&
+    echo "$dmi" | grep -q 'Manufacturer: Microsoft Corporation'; then
     echo virtualpc
 fi
 
@@ -156,6 +158,11 @@ if grep -q '^vendor_id.*IBM/S390' $root/proc/cpuinfo; then
             echo ibm_systemz-direct
         fi
     fi
+fi
+
+# Check for Parallels.
+if echo "$dmi" | grep -q 'Vendor: Parallels'; then
+    echo parallels
 fi
 
 # Check for Xen.
