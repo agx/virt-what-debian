@@ -1,3 +1,9 @@
+virt-what (1.8-1) unstable; urgency=low
+
+  * [191096f] Imported Upstream version 1.8
+
+ -- Laurent Léonard <laurent@open-minds.org>  Wed, 16 Feb 2011 10:39:19 +0100
+
 virt-what (1.7-1) experimental; urgency=low
 
   * [83acfaa] Imported Upstream version 1.7
