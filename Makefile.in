@@ -50,12 +50,15 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-libexec_PROGRAMS = virt-what-cpuid-helper$(EXEEXT)
+build_triplet = @build@
+host_triplet = @host@
+libexec_PROGRAMS = virt-what-cpuid-helper$(EXEEXT) $(am__EXEEXT_1)
+@HOST_CPU_IA64_TRUE@am__append_1 = virt-what-ia64-xen-rdtsc-test
 subdir = .
 DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
 	$(srcdir)/virt-what.in $(top_srcdir)/configure COPYING compile \
-	depcomp install-sh missing
+	config.guess config.sub depcomp install-sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -66,12 +69,19 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
 CONFIG_CLEAN_FILES = virt-what
 CONFIG_CLEAN_VPATH_FILES =
+@HOST_CPU_IA64_TRUE@am__EXEEXT_1 =  \
+@HOST_CPU_IA64_TRUE@	virt-what-ia64-xen-rdtsc-test$(EXEEXT)
 am__installdirs = "$(DESTDIR)$(libexecdir)" "$(DESTDIR)$(sbindir)" \
 	"$(DESTDIR)$(man1dir)"
 PROGRAMS = $(libexec_PROGRAMS)
 virt_what_cpuid_helper_SOURCES = virt-what-cpuid-helper.c
 virt_what_cpuid_helper_OBJECTS = virt-what-cpuid-helper.$(OBJEXT)
 virt_what_cpuid_helper_LDADD = $(LDADD)
+virt_what_ia64_xen_rdtsc_test_SOURCES =  \
+	virt-what-ia64-xen-rdtsc-test.c
+virt_what_ia64_xen_rdtsc_test_OBJECTS =  \
+	virt-what-ia64-xen-rdtsc-test.$(OBJEXT)
+virt_what_ia64_xen_rdtsc_test_LDADD = $(LDADD)
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
     $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
@@ -102,8 +112,9 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = virt-what-cpuid-helper.c
-DIST_SOURCES = virt-what-cpuid-helper.c
+SOURCES = virt-what-cpuid-helper.c virt-what-ia64-xen-rdtsc-test.c
+DIST_SOURCES = virt-what-cpuid-helper.c \
+	virt-what-ia64-xen-rdtsc-test.c
 man1dir = $(mandir)/man1
 NROFF = nroff
 MANS = $(man_MANS)
@@ -175,14 +186,22 @@ am__quote = @am__quote@
 am__tar = @am__tar@
 am__untar = @am__untar@
 bindir = @bindir@
+build = @build@
 build_alias = @build_alias@
+build_cpu = @build_cpu@
+build_os = @build_os@
+build_vendor = @build_vendor@
 builddir = @builddir@
 datadir = @datadir@
 datarootdir = @datarootdir@
 docdir = @docdir@
 dvidir = @dvidir@
 exec_prefix = @exec_prefix@
+host = @host@
 host_alias = @host_alias@
+host_cpu = @host_cpu@
+host_os = @host_os@
+host_vendor = @host_vendor@
 htmldir = @htmldir@
 includedir = @includedir@
 infodir = @infodir@
@@ -206,6 +225,26 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+CLEANFILES = virt-what virt-what.1 virt-what.txt
+AM_CPPFLAGS = -Wall
+sbin_SCRIPTS = virt-what
+man_MANS = virt-what.1
+TESTS = \
+	tests/test-baremetal.sh \
+	tests/test-esx4.1.sh \
+	tests/test-hyperv.sh \
+	tests/test-kvm.sh \
+	tests/test-kvm-explicit-cpu.sh \
+	tests/test-linux-vserver.sh \
+	tests/test-lx86.sh \
+	tests/test-parallels-desktop.sh \
+	tests/test-qemu.sh \
+	tests/test-rhel5-xen-dom0.sh \
+	tests/test-rhel5-xen-domU-hvm.sh \
+	tests/test-rhel5-xen-domU-hvm-ia64.sh \
+	tests/test-rhel5-xen-domU-pv.sh \
+	tests/test-zvm.sh
+
 EXTRA_DIST = \
 	virt-what.in \
 	virt-what.pod \
@@ -213,36 +252,55 @@ EXTRA_DIST = \
 	tests/baremetal/proc/self/status \
 	tests/baremetal/sbin/dmidecode \
 	tests/baremetal/sbin/id \
+	tests/baremetal/sbin/uname \
 	tests/baremetal/sbin/virt-what-cpuid-helper \
 	tests/esx4.1/proc/cpuinfo \
 	tests/esx4.1/proc/self/status \
 	tests/esx4.1/sbin/dmidecode \
 	tests/esx4.1/sbin/id \
+	tests/esx4.1/sbin/uname \
 	tests/esx4.1/sbin/virt-what-cpuid-helper \
 	tests/hyperv/proc/cpuinfo \
 	tests/hyperv/proc/self/status \
 	tests/hyperv/sbin/dmidecode \
 	tests/hyperv/sbin/id \
+	tests/hyperv/sbin/uname \
 	tests/hyperv/sbin/virt-what-cpuid-helper \
 	tests/kvm/proc/cpuinfo \
 	tests/kvm/proc/self/status \
 	tests/kvm/sbin/dmidecode \
 	tests/kvm/sbin/id \
+	tests/kvm/sbin/uname \
 	tests/kvm/sbin/virt-what-cpuid-helper \
+	tests/kvm-explicit-cpu/proc/cpuinfo \
+	tests/kvm-explicit-cpu/proc/self/status \
+	tests/kvm-explicit-cpu/sbin/dmidecode \
+	tests/kvm-explicit-cpu/sbin/id \
+	tests/kvm-explicit-cpu/sbin/uname \
+	tests/kvm-explicit-cpu/sbin/virt-what-cpuid-helper \
 	tests/linux-vserver/proc/cpuinfo \
 	tests/linux-vserver/proc/self/status \
 	tests/linux-vserver/sbin/dmidecode \
 	tests/linux-vserver/sbin/id \
+	tests/linux-vserver/sbin/uname \
 	tests/linux-vserver/sbin/virt-what-cpuid-helper \
+	tests/lx86/proc/cpuinfo \
+	tests/lx86/proc/self/status \
+	tests/lx86/sbin/dmidecode \
+	tests/lx86/sbin/id \
+	tests/lx86/sbin/uname \
+	tests/lx86/sbin/virt-what-cpuid-helper \
 	tests/parallels-desktop/proc/cpuinfo \
 	tests/parallels-desktop/proc/self/status \
 	tests/parallels-desktop/sbin/dmidecode \
 	tests/parallels-desktop/sbin/id \
+	tests/parallels-desktop/sbin/uname \
 	tests/parallels-desktop/sbin/virt-what-cpuid-helper \
 	tests/qemu/proc/cpuinfo \
 	tests/qemu/proc/self/status \
 	tests/qemu/sbin/dmidecode \
 	tests/qemu/sbin/id \
+	tests/qemu/sbin/uname \
 	tests/qemu/sbin/virt-what-cpuid-helper \
 	tests/rhel5-xen-dom0/proc/cpuinfo \
 	tests/rhel5-xen-dom0/proc/self/status \
@@ -254,6 +312,7 @@ EXTRA_DIST = \
 	tests/rhel5-xen-dom0/proc/xen/xsd_port \
 	tests/rhel5-xen-dom0/sbin/dmidecode \
 	tests/rhel5-xen-dom0/sbin/id \
+	tests/rhel5-xen-dom0/sbin/uname \
 	tests/rhel5-xen-dom0/sbin/virt-what-cpuid-helper \
 	tests/rhel5-xen-dom0/sys/hypervisor/properties/pagesize \
 	tests/rhel5-xen-dom0/sys/hypervisor/properties/changeset \
@@ -273,7 +332,19 @@ EXTRA_DIST = \
 	tests/rhel5-xen-domU-hvm/proc/self/status \
 	tests/rhel5-xen-domU-hvm/sbin/dmidecode \
 	tests/rhel5-xen-domU-hvm/sbin/id \
+	tests/rhel5-xen-domU-hvm/sbin/uname \
 	tests/rhel5-xen-domU-hvm/sbin/virt-what-cpuid-helper \
+	tests/rhel5-xen-domU-hvm-ia64/proc/cpuinfo \
+	tests/rhel5-xen-domU-hvm-ia64/proc/self/status \
+	tests/rhel5-xen-domU-hvm-ia64/sbin/dmidecode \
+	tests/rhel5-xen-domU-hvm-ia64/sbin/id \
+	tests/rhel5-xen-domU-hvm-ia64/sbin/uname \
+	tests/rhel5-xen-domU-hvm-ia64/sbin/virt-what-cpuid-helper \
+	tests/rhel5-xen-domU-hvm-ia64/sys/bus/xen/drivers/vbd/bind \
+	tests/rhel5-xen-domU-hvm-ia64/sys/bus/xen/drivers/vbd/unbind \
+	tests/rhel5-xen-domU-hvm-ia64/sys/bus/xen/drivers/vif/bind \
+	tests/rhel5-xen-domU-hvm-ia64/sys/bus/xen/drivers/vif/unbind \
+	tests/rhel5-xen-domU-hvm-ia64/sys/bus/xen/drivers_probe \
 	tests/rhel5-xen-domU-pv/proc/cpuinfo \
 	tests/rhel5-xen-domU-pv/proc/self/status \
 	tests/rhel5-xen-domU-pv/proc/xen/balloon \
@@ -282,6 +353,7 @@ EXTRA_DIST = \
 	tests/rhel5-xen-domU-pv/proc/xen/xenbus \
 	tests/rhel5-xen-domU-pv/sbin/dmidecode \
 	tests/rhel5-xen-domU-pv/sbin/id \
+	tests/rhel5-xen-domU-pv/sbin/uname \
 	tests/rhel5-xen-domU-pv/sbin/virt-what-cpuid-helper \
 	tests/rhel5-xen-domU-pv/sys/hypervisor/properties/pagesize \
 	tests/rhel5-xen-domU-pv/sys/hypervisor/properties/changeset \
@@ -302,35 +374,9 @@ EXTRA_DIST = \
 	tests/zvm/proc/sysinfo \
 	tests/zvm/sbin/dmidecode \
 	tests/zvm/sbin/id \
+	tests/zvm/sbin/uname \
 	tests/zvm/sbin/virt-what-cpuid-helper \
-	tests/test-baremetal.sh \
-	tests/test-esx4.1.sh \
-	tests/test-hyperv.sh \
-	tests/test-kvm.sh \
-	tests/test-linux-vserver.sh \
-	tests/test-parallels-desktop.sh \
-	tests/test-qemu.sh \
-	tests/test-rhel5-xen-dom0.sh \
-	tests/test-rhel5-xen-domU-hvm.sh \
-	tests/test-rhel5-xen-domU-pv.sh \
-	tests/test-zvm.sh
-
-CLEANFILES = virt-what virt-what.1 virt-what.txt
-AM_CPPFLAGS = -Wall
-sbin_SCRIPTS = virt-what
-man_MANS = virt-what.1
-TESTS = \
-	tests/test-baremetal.sh \
-	tests/test-esx4.1.sh \
-	tests/test-hyperv.sh \
-	tests/test-kvm.sh \
-	tests/test-linux-vserver.sh \
-	tests/test-parallels-desktop.sh \
-	tests/test-qemu.sh \
-	tests/test-rhel5-xen-dom0.sh \
-	tests/test-rhel5-xen-domU-hvm.sh \
-	tests/test-rhel5-xen-domU-pv.sh \
-	tests/test-zvm.sh
+	$(TESTS)
 
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
@@ -430,6 +476,9 @@ clean-libexecPROGRAMS:
 virt-what-cpuid-helper$(EXEEXT): $(virt_what_cpuid_helper_OBJECTS) $(virt_what_cpuid_helper_DEPENDENCIES) 
 	@rm -f virt-what-cpuid-helper$(EXEEXT)
 	$(LINK) $(virt_what_cpuid_helper_OBJECTS) $(virt_what_cpuid_helper_LDADD) $(LIBS)
+virt-what-ia64-xen-rdtsc-test$(EXEEXT): $(virt_what_ia64_xen_rdtsc_test_OBJECTS) $(virt_what_ia64_xen_rdtsc_test_DEPENDENCIES) 
+	@rm -f virt-what-ia64-xen-rdtsc-test$(EXEEXT)
+	$(LINK) $(virt_what_ia64_xen_rdtsc_test_OBJECTS) $(virt_what_ia64_xen_rdtsc_test_LDADD) $(LIBS)
 install-sbinSCRIPTS: $(sbin_SCRIPTS)
 	@$(NORMAL_INSTALL)
 	test -z "$(sbindir)" || $(MKDIR_P) "$(DESTDIR)$(sbindir)"
@@ -472,6 +521,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/virt-what-cpuid-helper.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/virt-what-ia64-xen-rdtsc-test.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
