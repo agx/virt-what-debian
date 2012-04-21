@@ -1,3 +1,10 @@
+virt-what (1.12-1) unstable; urgency=low
+
+  * [c5ac7c9] Imported Upstream version 1.12
+  * [a45b860] Bump Standards-Version to 3.9.3
+
+ -- Laurent Léonard <laurent@open-minds.org>  Sun, 22 Apr 2012 00:43:36 +0200
+
 virt-what (1.11-1) unstable; urgency=low
 
   * [6981fe1] Imported Upstream version 1.11
