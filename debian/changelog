@@ -1,3 +1,11 @@
+virt-what (1.13-1) unstable; urgency=low
+
+  * [4b476d9] Imported Upstream version 1.13
+  * [303b5e6] Remove obsolete DM-Upload-Allowed field
+  * [ca3952e] Bump Standards-Version to 3.9.4
+
+ -- Laurent Léonard <laurent@open-minds.org>  Wed, 21 Aug 2013 01:01:57 +0200
+
 virt-what (1.12-1) unstable; urgency=low
 
   * [c5ac7c9] Imported Upstream version 1.12
