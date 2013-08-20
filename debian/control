@@ -8,7 +8,6 @@ Standards-Version: 3.9.3
 Vcs-Git: git://git.debian.org/pkg-libvirt/virt-what.git
 Vcs-Browser: http://git.debian.org/?p=pkg-libvirt/virt-what.git
 Homepage: http://et.redhat.com/~rjones/virt-what
-DM-Upload-Allowed: yes
 
 Package: virt-what
 Architecture: any
