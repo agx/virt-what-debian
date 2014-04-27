@@ -18,13 +18,13 @@
 
 # 'virt-what' tries to detect the type of virtualization being
 # used (or none at all if we're running on bare-metal).  It prints
-# out one of more lines each being a 'fact' about the virtualization.
+# out one or more lines each being a 'fact' about the virtualization.
 #
 # Please see also the manual page virt-what(1).
 # This script should be run as root.
 #
 # The following resources were useful in writing this script:
-# . http://www.dmo.ca/blog/20080530151107
+# . http://dmo.ca/blog/detecting-virtualization-on-linux/
 
 # Do not allow unset variables, and set defaults.
 set -u
@@ -67,7 +67,7 @@ while true; do
 done
 
 # Add /sbin and /usr/sbin to the path so we can find system
-# binaries like dmicode.
+# binaries like dmidecode.
 # Add /usr/libexec to the path so we can find the helper binary.
 prefix=@prefix@
 exec_prefix=@exec_prefix@
@@ -147,6 +147,11 @@ fi
 # Check for Linux-VServer
 if cat "${root}/proc/self/status" | grep -q "VxID: [0-9]*"; then
     echo linux_vserver
+    if grep -q "VxID: 0$" "${root}/proc/self/status"; then
+        echo linux_vserver-host
+    else
+        echo linux_vserver-guest
+    fi
 fi
 
 # Check for UML.
@@ -192,9 +197,9 @@ fi
 if [ "$cpuid" = "XenVMMXenVMM" ]; then
     echo xen; echo xen-hvm
     skip_qemu_kvm=true
-elif [ -f "${root}/proc/xen/capabilities" ]; then
+elif [ -d "${root}/proc/xen" ]; then
     echo xen
-    if grep -q "control_d" "${root}/proc/xen/capabilities"; then
+    if grep -q "control_d" "${root}/proc/xen/capabilities" 2>/dev/null; then
         echo xen-dom0
     else
         echo xen-domU
