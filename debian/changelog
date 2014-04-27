@@ -1,3 +1,11 @@
+virt-what (1.14-1) unstable; urgency=medium
+
+  * [423b78c] Imported Upstream version 1.14
+  * [a79fcc7] Use autoreconf
+  * [29bfbac] Bump Standards-Version to 3.9.5
+
+ -- Laurent Léonard <laurent@open-minds.org>  Sun, 27 Apr 2014 02:59:54 +0200
+
 virt-what (1.13-1) unstable; urgency=low
 
   * [4b476d9] Imported Upstream version 1.13
