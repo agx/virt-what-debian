@@ -32,27 +32,32 @@ man_MANS = virt-what.1
 
 virt-what.1: virt-what.pod
 	pod2man -c "Virtualization Support" --release "$(PACKAGE)-$(VERSION)" \
-	  $< > $@
+	  $? > $@
 virt-what.txt: virt-what.pod
-	pod2text $< > $@
+	pod2text $? > $@
 
 endif
 
 TESTS = \
 	tests/test-baremetal.sh \
+	tests/test-docker.sh \
 	tests/test-esx4.1.sh \
 	tests/test-hyperv.sh \
 	tests/test-kvm.sh \
 	tests/test-kvm-explicit-cpu.sh \
 	tests/test-linux-vserver.sh \
+	tests/test-lkvm.sh \
+	tests/test-lkvm-arm.sh \
 	tests/test-lxc.sh \
 	tests/test-lx86.sh \
 	tests/test-parallels-desktop.sh \
 	tests/test-qemu.sh \
+	tests/test-qemu-arm.sh \
 	tests/test-rhel5-xen-dom0.sh \
 	tests/test-rhel5-xen-domU-hvm.sh \
 	tests/test-rhel5-xen-domU-hvm-ia64.sh \
 	tests/test-rhel5-xen-domU-pv.sh \
+	tests/test-xen-arm.sh \
 	tests/test-zvm.sh
 
 EXTRA_DIST = \
@@ -63,6 +68,12 @@ EXTRA_DIST = \
 	tests/baremetal/sbin/dmidecode \
 	tests/baremetal/sbin/uname \
 	tests/baremetal/sbin/virt-what-cpuid-helper \
+	tests/docker/.dockerinit \
+	tests/docker/proc/cpuinfo \
+	tests/docker/proc/self/status \
+	tests/docker/sbin/dmidecode \
+	tests/docker/sbin/uname \
+	tests/docker/sbin/virt-what-cpuid-helper \
 	tests/esx4.1/proc/cpuinfo \
 	tests/esx4.1/proc/self/status \
 	tests/esx4.1/sbin/dmidecode \
@@ -88,6 +99,17 @@ EXTRA_DIST = \
 	tests/linux-vserver/sbin/dmidecode \
 	tests/linux-vserver/sbin/uname \
 	tests/linux-vserver/sbin/virt-what-cpuid-helper \
+	tests/lkvm/proc/cpuinfo \
+	tests/lkvm/proc/self/status \
+	tests/lkvm/sbin/dmidecode \
+	tests/lkvm/sbin/uname \
+	tests/lkvm/sbin/virt-what-cpuid-helper \
+	tests/lkvm-arm/proc/cpuinfo \
+	tests/lkvm-arm/proc/device-tree/compatible \
+	tests/lkvm-arm/proc/self/status \
+	tests/lkvm-arm/sbin/dmidecode \
+	tests/lkvm-arm/sbin/uname \
+	tests/lkvm-arm/sbin/virt-what-cpuid-helper \
 	tests/lxc/proc/1/environ \
 	tests/lxc/proc/cpuinfo \
 	tests/lxc/proc/self/status \
@@ -109,6 +131,12 @@ EXTRA_DIST = \
 	tests/qemu/sbin/dmidecode \
 	tests/qemu/sbin/uname \
 	tests/qemu/sbin/virt-what-cpuid-helper \
+	tests/qemu-arm/proc/cpuinfo \
+	tests/qemu-arm/proc/device-tree/fw-cfg@9020000/compatible \
+	tests/qemu-arm/proc/self/status \
+	tests/qemu-arm/sbin/dmidecode \
+	tests/qemu-arm/sbin/uname \
+	tests/qemu-arm/sbin/virt-what-cpuid-helper \
 	tests/rhel5-xen-dom0/proc/cpuinfo \
 	tests/rhel5-xen-dom0/proc/self/status \
 	tests/rhel5-xen-dom0/proc/xen/balloon \
@@ -172,6 +200,12 @@ EXTRA_DIST = \
 	tests/rhel5-xen-domU-pv/sys/hypervisor/compilation/compiled_by \
 	tests/rhel5-xen-domU-pv/sys/hypervisor/compilation/compile_date \
 	tests/rhel5-xen-domU-pv/sys/hypervisor/uuid \
+	tests/xen-arm/proc/cpuinfo \
+	tests/xen-arm/proc/device-tree/hypervisor/compatible \
+	tests/xen-arm/proc/self/status \
+	tests/xen-arm/sbin/dmidecode \
+	tests/xen-arm/sbin/uname \
+	tests/xen-arm/sbin/virt-what-cpuid-helper \
 	tests/zvm/proc/cpuinfo \
 	tests/zvm/proc/self/status \
 	tests/zvm/proc/sysinfo \
