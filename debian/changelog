@@ -1,4 +1,4 @@
-virt-what (1.15-1) UNRELEASED; urgency=medium
+virt-what (1.15-1) unstable; urgency=medium
 
   [ Guido Günther ]
   * Move to DEP-14 compliant branch names.
@@ -26,7 +26,7 @@ virt-what (1.15-1) UNRELEASED; urgency=medium
       - Updated to use the new upstream place.
       - Using a signature to verify the tarball.
 
- -- Guido Günther <agx@sigxcpu.org>  Sat, 24 Dec 2016 01:41:46 -0200
+ -- Joao Eriberto Mota Filho <eriberto@debian.org>  Sat, 24 Dec 2016 01:41:46 -0200
 
 virt-what (1.14-1) unstable; urgency=medium
 
