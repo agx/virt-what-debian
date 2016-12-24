@@ -1,3 +1,25 @@
+virt-what (1.15-1) UNRELEASED; urgency=medium
+
+  [ Guido Günther ]
+  * Move to DEP-14 compliant branch names.
+
+  [ Joao Eriberto Mota Filho ]
+  * New upstream version 1.15.
+  * New co-maintainer.
+  * New upstream homepage.
+  * Migrations:
+      - DebSrc to 3.0 format.
+      - DH level to 10.
+      - Dropped CDBS. Using DebHelper.
+  * debian/control:
+      - Bumped Standards-Version to 3.9.8.
+      - Changed Priority to optional.
+      - Removed a MIA co-maintainer.
+      - Updated the Vcs-* fields.
+
+
+ -- Guido Günther <agx@sigxcpu.org>  Sat, 24 Dec 2016 01:41:46 -0200
+
 virt-what (1.14-1) unstable; urgency=medium
 
   * [423b78c] Imported Upstream version 1.14
