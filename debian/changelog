@@ -17,7 +17,10 @@ virt-what (1.15-1) UNRELEASED; urgency=medium
       - Changed Priority to optional.
       - Removed a MIA co-maintainer.
       - Updated the Vcs-* fields.
-
+  * debian/watch:
+      - Bumped to version 4.
+      - Updated to use the new upstream place.
+      - Using a signature to verify the tarball.
 
  -- Guido Günther <agx@sigxcpu.org>  Sat, 24 Dec 2016 01:41:46 -0200
 
