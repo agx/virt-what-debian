@@ -16,7 +16,7 @@ Depends: dmidecode [amd64 i386 ia64 kfreebsd-amd64 kfreebsd-i386],
          ${shlibs:Depends}
 Description: detect if we are running in a virtual machine
  Virt-what is a shell script which can be used to detect if the program is
- running in a virtual machine.
+ running in a virtual machine (VM).
  .
  The program prints out a list of "facts" about the virtual machine, derived
  from heuristics. One fact is printed per line.
