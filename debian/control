@@ -1,13 +1,13 @@
 Source: virt-what
 Section: admin
-Priority: extra
+Priority: optional
 Maintainer: Debian Libvirt Maintainers <pkg-libvirt-maintainers@lists.alioth.debian.org>
-Uploaders: Laurent Léonard <laurent@open-minds.org>
-Build-Depends: cdbs, debhelper (>= 7), dh-autoreconf
-Standards-Version: 3.9.5
-Vcs-Git: git://git.debian.org/pkg-libvirt/virt-what.git
-Vcs-Browser: http://git.debian.org/?p=pkg-libvirt/virt-what.git
-Homepage: http://et.redhat.com/~rjones/virt-what
+Uploaders: Joao Eriberto Mota Filho <eriberto@debian.org>
+Build-Depends: debhelper (>= 10), dh-autoreconf
+Standards-Version: 3.9.8
+Vcs-Git: https://anonscm.debian.org/git/pkg-libvirt/virt-what.git
+Vcs-Browser: https://anonscm.debian.org/git/pkg-libvirt/virt-what.git
+Homepage: https://people.redhat.com/~rjones/virt-what/
 
 Package: virt-what
 Architecture: any
