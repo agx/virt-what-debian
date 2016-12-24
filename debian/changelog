@@ -11,6 +11,7 @@ virt-what (1.15-1) UNRELEASED; urgency=medium
       - DebSrc to 3.0 format.
       - DH level to 10.
       - Dropped CDBS. Using DebHelper.
+  * Run wrap-and-sort.
   * debian/control:
       - Bumped Standards-Version to 3.9.8.
       - Changed Priority to optional.
