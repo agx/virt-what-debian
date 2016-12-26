@@ -21,6 +21,8 @@ virt-what (1.15-1) unstable; urgency=medium
       - Migrated to 1.0 format.
       - Fixed the licensing to GPL-2+.
       - Updated all information.
+  * debian/rules: added the DEB_BUILD_MAINT_OPTIONS variable to improve the
+    GCC hardening.
   * debian/watch:
       - Bumped to version 4.
       - Updated to use the new upstream place.
