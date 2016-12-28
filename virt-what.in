@@ -1,4 +1,4 @@
-#!/bin/bash -
+#!/bin/sh -
 # @configure_input@
 # Copyright (C) 2008-2011 Red Hat Inc.
 #
@@ -30,15 +30,20 @@
 set -u
 root=''
 skip_qemu_kvm=false
+skip_lkvm=false
 
 VERSION="@VERSION@"
 
-function fail {
+have_cpuinfo () {
+    test -e "${root}/proc/cpuinfo"
+}
+
+fail () {
     echo "virt-what: $1" >&2
     exit 1
 }
 
-function usage {
+usage () {
     echo "virt-what [options]"
     echo "Options:"
     echo "  --help          Display this help"
@@ -47,24 +52,21 @@ function usage {
 }
 
 # Handle the command line arguments, if any.
-
-TEMP=$(getopt -o v --long help --long version --long test-root: -n 'virt-what' -- "$@")
-if [ $? != 0 ]; then exit 1; fi
-eval set -- "$TEMP"
-
-while true; do
+while test $# -gt 0; do
     case "$1" in
 	--help) usage ;;
-        --test-root)
+        --test-root=*)
             # Deliberately undocumented: used for 'make check'.
-            root="$2"
-            shift 2
+            root=$(echo "$1" | sed 's/.*=//')
+            shift 1
+            test -z "$root" && fail "--test-root option requires a value"
             ;;
 	-v|--version) echo "$VERSION"; exit 0 ;;
 	--) shift; break ;;
-	*) fail "internal error ($1)" ;;
+	*) fail "unrecognized option '$1'";;
     esac
 done
+test $# -gt 0 && fail "extra operand '$1'"
 
 # Add /sbin and /usr/sbin to the path so we can find system
 # binaries like dmidecode.
@@ -74,9 +76,16 @@ exec_prefix=@exec_prefix@
 PATH="${root}@libexecdir@:${root}/sbin:${root}/usr/sbin:${PATH}"
 
 # Check we're running as root.
+EFFUID=$(id -u) || fail "failed to get current user id"
 
-if [ "x$root" = "x" ] && [ "$EUID" -ne 0 ]; then
+if [ "x$root" = "x" ] && [ "$EFFUID" -ne 0 ]; then
     fail "this script must be run as root"
+fi
+
+# Try to locate the CPU-ID helper program
+CPUID_HELPER=$(which virt-what-cpuid-helper 2>/dev/null)
+if [ -z "$CPUID_HELPER" ] ; then
+    fail "virt-what-cpuid-helper program not found in \$PATH"
 fi
 
 # Many fullvirt hypervisors give an indication through CPUID.  Use the
@@ -94,7 +103,7 @@ dmi=$(LANG=C dmidecode 2>&1)
 # Architecture.
 # Note for the purpose of testing, we only call uname with -p option.
 
-arch=$(uname -p)
+arch=$(uname -p | sed -e 's/i.86/i386/' | sed -e 's/arm.*/arm/')
 
 # Check for VMware.
 # cpuid check added by Chetan Loke.
@@ -145,7 +154,8 @@ if [ -e "${root}/proc/1/environ" ] &&
 fi
 
 # Check for Linux-VServer
-if cat "${root}/proc/self/status" | grep -q "VxID: [0-9]*"; then
+if test -e "${root}/proc/self/status" \
+   && cat "${root}/proc/self/status" | grep -q "VxID: [0-9]*"; then
     echo linux_vserver
     if grep -q "VxID: 0$" "${root}/proc/self/status"; then
         echo linux_vserver-host
@@ -156,12 +166,13 @@ fi
 
 # Check for UML.
 # Added by Laurent Léonard.
-if grep -q 'UML' "${root}/proc/cpuinfo"; then
+if have_cpuinfo && grep -q 'UML' "${root}/proc/cpuinfo"; then
     echo uml
 fi
 
 # Check for IBM PowerVM Lx86 Linux/x86 emulator.
-if grep -q '^vendor_id.*PowerVM Lx86' "${root}/proc/cpuinfo"; then
+if have_cpuinfo && grep -q '^vendor_id.*PowerVM Lx86' "${root}/proc/cpuinfo"
+then
     echo powervm_lx86
 fi
 
@@ -172,7 +183,7 @@ if echo "$dmi" | grep -q 'Manufacturer.*HITACHI' &&
 fi
 
 # Check for IBM SystemZ.
-if grep -q '^vendor_id.*IBM/S390' "${root}/proc/cpuinfo"; then
+if have_cpuinfo && grep -q '^vendor_id.*IBM/S390' "${root}/proc/cpuinfo"; then
     echo ibm_systemz
     if [ -f "${root}/proc/sysinfo" ]; then
         if grep -q 'VM.*Control Program.*z/VM' "${root}/proc/sysinfo"; then
@@ -205,12 +216,20 @@ elif [ -d "${root}/proc/xen" ]; then
         echo xen-domU
     fi
     skip_qemu_kvm=true
+    skip_lkvm=true
 elif [ -f "${root}/sys/hypervisor/type" ] &&
     grep -q "xen" "${root}/sys/hypervisor/type"; then
     # Ordinary kernel with pv_ops.  There does not seem to be
     # enough information at present to tell whether this is dom0
     # or domU.  XXX
     echo xen
+elif [ "$arch" = "arm" ] || [ "$arch" = "aarch64" ]; then
+    if [ -d "${root}/proc/device-tree/hypervisor" ] &&
+        grep -q "xen" "${root}/proc/device-tree/hypervisor/compatible"; then
+        echo xen
+        skip_qemu_kvm=true
+        skip_lkvm=true
+    fi
 elif [ "$arch" = "ia64" ]; then
     if [ -d "${root}/sys/bus/xen" -a ! -d "${root}/sys/bus/xen-backend" ]; then
         # PV-on-HVM drivers installed in a Xen guest.
@@ -238,6 +257,14 @@ fi
 if ! "$skip_qemu_kvm"; then
     if [ "$cpuid" = "KVMKVMKVM" ]; then
 	echo kvm
+    elif [ "$arch" = "arm" ] || [ "$arch" = "aarch64" ]; then
+        if [ -d "${root}/proc/device-tree" ] &&
+            ls "${root}/proc/device-tree" | grep -q "fw-cfg"; then
+            # We don't have enough information to determine if we're
+            # using KVM acceleration or not.
+            echo qemu
+            skip_lkvm=true
+        fi
     else
         # XXX This is known to fail for qemu with the explicit -cpu
         # option, since /proc/cpuinfo will not contain the QEMU
@@ -247,4 +274,20 @@ if ! "$skip_qemu_kvm"; then
 	    echo qemu
 	fi
     fi
+fi
+
+if ! "$skip_lkvm"; then
+    if [ "$cpuid" = "LKVMLKVMLKVM" ]; then
+        echo lkvm
+    elif [ "$arch" = "arm" ] || [ "$arch" = "aarch64" ]; then
+        if [ -d "${root}/proc/device-tree" ] &&
+            grep -q "dummy-virt" "${root}/proc/device-tree/compatible"; then
+            echo lkvm
+	fi
+    fi
+fi
+
+# Check for Docker.
+if [ -f "${root}/.dockerinit" ]; then
+	echo docker
 fi
