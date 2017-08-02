@@ -1,3 +1,11 @@
+virt-what (1.18-1~1.gbp85a163) UNRELEASED; urgency=medium
+
+  ** SNAPSHOT build @85a1630ca337d9a17ea60aeb380114df2f094955 **
+
+  * [3d21237] New upstream version 1.18
+
+ -- Guido Günther <agx@sigxcpu.org>  Wed, 02 Aug 2017 14:10:40 -0300
+
 virt-what (1.15-1) unstable; urgency=medium
 
   [ Guido Günther ]

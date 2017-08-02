@@ -25,6 +25,18 @@ don't know about or cannot detect.
 
 =over 4
 
+=item B<aws>
+
+Amazon Web Services cloud guest.
+
+Status: contributed by Qi Guo.
+
+=item B<bhyve>
+
+This is a bhyve (FreeBSD hypervisor) guest.
+
+Status: contributed by Leonardo Brondani Schenkel.
+
 =item B<docker>
 
 This is a Docker container.
@@ -36,6 +48,21 @@ Status: confirmed by Charles Nguyen
 This is Microsoft Hyper-V hypervisor.
 
 Status: confirmed by RWMJ
+
+=item B<ibm_power-kvm>
+
+This is an IBM POWER KVM guest.
+
+Status: contributed by Adrian Likins.
+
+=item B<ibm_power-lpar_shared>
+
+=item B<ibm_power-lpar_dedicated>
+
+This is an IBM POWER LPAR (hardware partition) in either shared
+or dedicated mode.
+
+Status: contributed by Adrian Likins.
 
 =item B<ibm_systemz>
 
@@ -57,7 +84,7 @@ Status: not confirmed
 This is Linux running directly on an LPAR on an IBM SystemZ
 hardware partitioning system.
 
-Status: not confirmed
+Status: confirmed by Thomas Huth
 
 =item B<ibm_systemz-zvm>
 
@@ -65,6 +92,43 @@ This is a z/VM guest running in an LPAR on an IBM SystemZ
 hardware partitioning system.
 
 Status: confirmed by RWMJ using a Fedora guest running in z/VM
+
+=item B<ibm_systemz-kvm>
+
+This is a KVM guest running on an IBM System Z hardware system.
+
+Status: contributed by Thomas Huth
+
+=item B<ldoms>
+
+The guest appears to be running on an Linux SPARC system with
+Oracle VM Server for SPARC (Logical Domains) support.
+
+Status: contributed by Darren Kenny
+
+=item B<ldoms-control>
+
+The is the Oracle VM Server for SPARC (Logical Domains) control domain.
+
+Status: contributed by Darren Kenny
+
+=item B<ldoms-guest>
+
+The is the Oracle VM Server for SPARC (Logical Domains) guest domain.
+
+Status: contributed by Darren Kenny
+
+=item B<ldoms-io>
+
+The is the Oracle VM Server for SPARC (Logical Domains) I/O domain.
+
+Status: contributed by Darren Kenny
+
+=item B<ldoms-root>
+
+The is the Oracle VM Server for SPARC (Logical Domains) Root domain.
+
+Status: contributed by Darren Kenny
 
 =item B<linux_vserver>
 
@@ -116,6 +180,13 @@ container.
 
 Status: contributed by Evgeniy Sokolov
 
+=item B<ovirt>
+
+The guest is running on an oVirt node.
+(See also C<rhev> below).
+
+Status: contributed by RWMJ, not confirmed
+
 =item B<parallels>
 
 The guest is running inside Parallels Virtual Platform
@@ -138,6 +209,12 @@ Note that for KVM (hardware accelerated) guests you should I<not> see
 this.
 
 Status: confirmed by RWMJ.
+
+=item B<rhev>
+
+The guest is running on a Red Hat Enterprise Virtualization (RHEV) node.
+
+Status: confirmed by RWMJ
 
 =item B<uml>
 
@@ -172,6 +249,12 @@ Status: contributed by Laurent Léonard
 The guest appears to be running on Microsoft VirtualPC.
 
 Status: not confirmed
+
+=item B<vmm>
+
+This is a vmm (OpenBSD hypervisor) guest.
+
+Status: contributed by Jasper Lievisse Adriaanse.
 
 =item B<vmware>
 
@@ -286,7 +369,7 @@ Richard W.M. Jones <rjones @ redhat . com>
 
 =head1 COPYRIGHT
 
-(C) Copyright 2008-2011 Red Hat Inc.,
+(C) Copyright 2008-2015 Red Hat Inc.,
 L<http://people.redhat.com/~rjones/virt-what/>
 
 This program is free software; you can redistribute it and/or modify
