@@ -2,7 +2,7 @@ Source: virt-what
 Section: admin
 Priority: optional
 Maintainer: Debian Libvirt Maintainers <pkg-libvirt-maintainers@lists.alioth.debian.org>
-Uploaders: Joao Eriberto Mota Filho <eriberto@debian.org>
+Uploaders: Joao Eriberto Mota Filho <eriberto@debian.org>, Guido Günther <agx@sigxcpu.org>
 Build-Depends: debhelper (>= 10), dh-autoreconf
 Standards-Version: 3.9.8
 Vcs-Git: https://anonscm.debian.org/git/pkg-libvirt/virt-what.git
