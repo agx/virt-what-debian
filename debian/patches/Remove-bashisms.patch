@@ -1,6 +1,6 @@
-From: =?utf-8?q?Guido_G=C3=BCnther_agx=40sigxcpu=2Eorg?=
-Date: =?utf-8?q?Wed=2C_2_Aug_2017_14=3A16=3A07_-0300?=
-Subject: =?utf-8?q?Remove_bashisms?=
+From: =?utf-8?q?Guido_G=C3=BCnther?= <agx@sigxcpu.org>
+Date: Wed, 2 Aug 2017 14:16:07 -0300
+Subject: Remove bashisms
 
 Use [ instead of [[ and -a instead of && so we fall back to test if
 necessary:
